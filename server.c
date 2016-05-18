@@ -18,4 +18,26 @@ int main(int argc, char** argv)
 	int port = strtol(argv[1], NULL, 10);
 	address.sin_port = htons(port);
 	address.sin_addr.s_addr = INADDR_ANY;
+
+	if (bind(socket_descriptor, (struct sockaddr *) &address, sizeof(address)) < 0)
+	{
+		perror("bind() error");
+		exit(errno);
+	}
+
+	
+
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
