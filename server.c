@@ -12,4 +12,10 @@ int main(int argc, char** argv)
 		perror("socket() error");
 		exit(errno);
 	}
+
+	struct sockaddr_in address;
+	address.sin_family = AF_INET;
+	int port = strtol(argv[1], NULL, 10);
+	address.sin_port = htons(port);
+	address.sin_addr.s_addr = INADDR_ANY;
 }
