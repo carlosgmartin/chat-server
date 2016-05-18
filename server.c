@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 
+static int backlog = 5;
+
 int main(int argc, char** argv)
 {
 	int socket_descriptor = socket(AF_INET, SOCK_STREAM, 0);
@@ -22,6 +24,12 @@ int main(int argc, char** argv)
 	if (bind(socket_descriptor, (struct sockaddr *) &address, sizeof(address)) < 0)
 	{
 		perror("bind() error");
+		exit(errno);
+	}
+
+	if (listen(socket_descriptor, backlog) < 0)
+	{
+		perror("listen() error");
 		exit(errno);
 	}
 
