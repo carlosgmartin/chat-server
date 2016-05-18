@@ -8,18 +8,18 @@ static int backlog = 5;
 
 int main(int argc, char** argv)
 {
+	struct sockaddr_in server_address;
+	server_address.sin_family = AF_INET;
+	int port = strtol(argv[1], NULL, 10);
+	server_address.sin_port = htons(port);
+	server_address.sin_addr.s_addr = INADDR_ANY;
+
 	int server_socket = socket(AF_INET, SOCK_STREAM, 0);
 	if (server_socket < 0)
 	{
 		perror("socket() error");
 		exit(errno);
 	}
-
-	struct sockaddr_in server_address;
-	server_address.sin_family = AF_INET;
-	int port = strtol(argv[1], NULL, 10);
-	server_address.sin_port = htons(port);
-	server_address.sin_addr.s_addr = INADDR_ANY;
 
 	if (bind(server_socket, (struct sockaddr *) &server_address, sizeof(server_address)) < 0)
 	{
@@ -44,9 +44,13 @@ int main(int argc, char** argv)
 			perror("accept() error");
 			exit(errno);
 		}
+		char* client_address_string = inet_ntoa(client_address.sin_addr);
+		int client_port = ntohs(client_address.sin_port);
+
+		printf("%s:%d connected\n", client_address_string, client_port);
 	}
 
-
+	
 
 
 
