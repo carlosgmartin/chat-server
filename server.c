@@ -95,7 +95,9 @@ int main(int argc, char * * argv)
 						FD_CLR(socket, &sockets);
 					}
 					else
-					{	
+					{
+						write(socket, buffer, bytes_received);
+
 						// Print message from client
 						fwrite(buffer, sizeof(char), bytes_received, stdout);
 					}
